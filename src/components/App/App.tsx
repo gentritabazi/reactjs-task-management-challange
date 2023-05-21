@@ -1,22 +1,12 @@
 import "../../assets/css/main.css";
+import ButtonAppBar from "../ButtonAppBar";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img className="App-logo" alt="logo" />
-        <p>Edit and save to reload.</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="App">
+      <ButtonAppBar />
     </div>
   );
-}
+};
 
 export default App;
