@@ -17,6 +17,8 @@ const TasksList = () => {
 
   return (
     <div>
+      {!todos.length && <div>No Tasks</div>}
+
       <Grid container spacing={2}>
         {todos.map((todo) => {
           return (
