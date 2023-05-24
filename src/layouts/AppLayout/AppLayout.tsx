@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import ButtonAppBar from "../../components/ButtonAppBar";
+import ButtonAppBar from "../../components/ButtonAppBar/ButtonAppBar";
 import { Container } from "@mui/material";
 
 interface ChildComponentProps {
