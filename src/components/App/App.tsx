@@ -1,7 +1,5 @@
 import "../../assets/css/main.css";
 import AppLayout from "../../layouts/AppLayout/AppLayout";
-import { RouterProvider } from "react-router-dom";
-import PublicRoutes from "../../routes/PublicRoutes";
 import { MainProvider } from "../../contexts/MainContext";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "../../pages/Home/Home";
