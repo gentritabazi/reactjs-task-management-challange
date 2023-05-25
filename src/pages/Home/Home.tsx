@@ -1,13 +1,12 @@
-import { Button, Typography, Box } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import TasksList from "../../components/TasksList/TasksList";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <div>
-      <Box sx={{ mb: "20px" }} />
-
       <div style={{ textAlign: "right" }}>
-        <Button variant="contained">Create Task</Button>
+        <Link to="create-task">Create Task</Link>
       </div>
 
       <Box sx={{ mb: "20px" }} />

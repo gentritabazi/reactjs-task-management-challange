@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import ButtonAppBar from "../../components/ButtonAppBar/ButtonAppBar";
-import { Container } from "@mui/material";
+import { Container, Box } from "@mui/material";
 
 interface ChildComponentProps {
   children: ReactNode;
@@ -11,7 +11,11 @@ const AppLayout: React.FC<ChildComponentProps> = ({ children }) => {
     <div>
       <ButtonAppBar />
 
-      <Container>{children}</Container>
+      <Container>
+        <Box sx={{ mb: "20px" }} />
+
+        {children}
+      </Container>
     </div>
   );
 };
