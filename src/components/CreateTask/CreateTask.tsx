@@ -11,9 +11,11 @@ import { Alert } from "@mui/material";
 const CreateTask: FC<{ addTodo: (text: string) => void }> = ({ addTodo }) => {
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setText(e.target.value);
+
   const createTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addTodo(text);

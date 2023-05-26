@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { MainContext } from "../../contexts/MainContext";
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 
 const TasksList = () => {
-  const { todos } = useContext(MainContext)!;
+  const { todos, deleteTodo } = useContext(MainContext)!;
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
@@ -15,6 +15,10 @@ const TasksList = () => {
     color: theme.palette.text.secondary,
   }));
 
+  const onClickDelete = (todoId: string) => {
+    deleteTodo(todoId);
+  };
+
   return (
     <div>
       {!todos.length && <div>No Tasks</div>}
@@ -23,7 +27,12 @@ const TasksList = () => {
         {todos.map((todo) => {
           return (
             <Grid item xs={6} key={todo.id}>
-              <Item>{todo.title}</Item>
+              <Item>
+                {todo.title}
+                <Box sx={{ mb: "20px" }} />
+                <button>Edit</button> |
+                <button onClick={() => onClickDelete(todo.id)}>Delete</button>
+              </Item>
             </Grid>
           );
         })}
