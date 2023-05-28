@@ -3,17 +3,22 @@ import { createContext, useState, useEffect, ReactNode } from "react";
 export interface TodoType {
   id: string;
   title: string;
-  completed: any;
-  starred: any;
+  description: string;
+  status: any;
 }
 
 interface MainContextInterface {
   todos: TodoType[];
+  getTodoById: (id: string | undefined) => TodoType | undefined;
   setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
-  markComplete: (id: string) => void;
   deleteTodo: (id: string) => void;
-  editTodo: (id: string, text: string) => void;
-  addTodo: (title: string) => void;
+  editTodo: (
+    id: string,
+    text: string,
+    description: string,
+    status: string
+  ) => void;
+  addTodo: (title: string, description: string, status: string) => void;
   moveTodo: (old: number, new_: number) => void;
 }
 
@@ -32,39 +37,43 @@ export const MainProvider = ({ children }: Props) => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = (title: string) => {
-    if (title.trim()) {
-      const newTodo = {
-        id: String(Math.random() * 5000),
-        title,
-        completed: false,
-        starred: false,
-      };
-      const orderTodos = [newTodo, ...todos];
-      setTodos(orderTodos);
-    }
+  const getTodoById = (id: string | undefined): TodoType | undefined => {
+    return todos.find((todo: TodoType) => todo.id === id);
   };
 
-  const editTodo: (id: string, text: string) => void = (
-    id: string,
-    text: string
-  ) => {
-    if (!(text === null) && text.trim()) {
-      setTodos(
-        todos.map((todo) => {
-          if (todo.id === id) todo.title = text;
-          return todo;
-        })
-      );
-    }
-  };
-
-  const markComplete = (id: string) => {
-    const orderTodos = todos.map((todo) => {
-      if (todo.id === id) todo.completed = !todo.completed;
-      return todo;
-    });
+  const addTodo = (title: string, description: string, status: string) => {
+    const newTodo = {
+      id: String(Math.random() * 5000),
+      title,
+      description,
+      status,
+    };
+    const orderTodos = [newTodo, ...todos];
     setTodos(orderTodos);
+  };
+
+  const editTodo: (
+    id: string,
+    text: string,
+    description: string,
+    status: string
+  ) => void = (
+    id: string,
+    text: string,
+    description: string,
+    status: string
+  ) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          todo.title = text;
+          todo.description = description;
+          todo.status = status;
+        }
+
+        return todo;
+      })
+    );
   };
 
   const deleteTodo = (id: string) =>
@@ -80,8 +89,8 @@ export const MainProvider = ({ children }: Props) => {
 
   const mainContextValue: MainContextInterface = {
     todos,
+    getTodoById,
     setTodos,
-    markComplete,
     deleteTodo,
     editTodo,
     addTodo,
