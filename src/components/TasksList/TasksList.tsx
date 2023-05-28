@@ -3,9 +3,11 @@ import { MainContext } from "../../contexts/MainContext";
 import { Grid, Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const TasksList = () => {
   const { todos, deleteTodo } = useContext(MainContext)!;
+  const navigate = useNavigate();
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
@@ -19,6 +21,10 @@ const TasksList = () => {
     deleteTodo(todoId);
   };
 
+  const onClickEdit = (todoId: string) => {
+    navigate(`/edit-task/${todoId}`);
+  };
+
   return (
     <div>
       {!todos.length && <div>No Tasks</div>}
@@ -28,9 +34,9 @@ const TasksList = () => {
           return (
             <Grid item xs={6} key={todo.id}>
               <Item>
-                {todo.title}
+                Title: {todo.title} | Status: {todo.status}
                 <Box sx={{ mb: "20px" }} />
-                <button>Edit</button> |
+                <button onClick={() => onClickEdit(todo.id)}>Edit</button> |
                 <button onClick={() => onClickDelete(todo.id)}>Delete</button>
               </Item>
             </Grid>

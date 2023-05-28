@@ -1,36 +1,43 @@
-import { useState, FC, ChangeEvent } from "react";
+import { useState, FC, ChangeEvent, useEffect, useContext } from "react";
 import {
   FormControl,
   Button,
   TextField,
-  Snackbar,
-  TextareaAutosize,
   Select,
-  Box,
   MenuItem,
+  Box,
   SelectChangeEvent,
+  TextareaAutosize,
 } from "@mui/material";
-import { Alert } from "@mui/material";
+import { MainContext } from "../../contexts/MainContext";
 
-const CreateTask: FC<{
-  addTodo: (text: string, description: string, status: string) => void;
-}> = ({ addTodo }) => {
+interface Props {
+  taskId: string | undefined;
+  onEdit: (title: string, description: string, status: string) => void;
+}
+
+const EditTask: FC<Props> = ({ taskId, onEdit }) => {
+  const { getTodoById } = useContext(MainContext)!;
   const [text, setText] = useState("");
-  const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
-  const [open, setOpen] = useState(false);
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    const task = getTodoById(taskId);
+
+    setText(String(task?.title));
+    setDescription(String(task?.description));
+    setStatus(String(task?.status));
+  }, []);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setText(e.target.value);
 
-  const createTodo = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addTodo(text, description, status);
-    setText("");
-    setDescription("");
-    setStatus("");
-    if (text.trim()) setOpen(true);
+
+    onEdit(text, description, status);
   };
 
   const onChangeStatus = (event: SelectChangeEvent) => {
@@ -43,7 +50,7 @@ const CreateTask: FC<{
 
   return (
     <div>
-      <form onSubmit={createTodo}>
+      <form onSubmit={onSubmitForm}>
         <FormControl fullWidth={true}>
           <TextField
             label="Title"
@@ -57,10 +64,10 @@ const CreateTask: FC<{
 
           <label>Description</label>
           <TextareaAutosize
-            value={description}
             placeholder="Description"
+            value={description}
             onChange={onChangeDescription}
-          ></TextareaAutosize>
+          />
 
           <Box sx={{ mb: "20px" }} />
 
@@ -71,34 +78,20 @@ const CreateTask: FC<{
             <MenuItem value="done">Done</MenuItem>
           </Select>
 
+          <Box sx={{ mb: "20px" }} />
+
           <Button
             variant="contained"
             color="primary"
             style={{ marginTop: 5 }}
             type="submit"
           >
-            Add
+            Edit
           </Button>
         </FormControl>
       </form>
-
-      <Snackbar
-        open={open}
-        autoHideDuration={4000}
-        onClose={() => setOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert
-          elevation={6}
-          variant="filled"
-          onClose={() => setOpen(false)}
-          severity="success"
-        >
-          Successfully added item!
-        </Alert>
-      </Snackbar>
     </div>
   );
 };
 
-export default CreateTask;
+export default EditTask;

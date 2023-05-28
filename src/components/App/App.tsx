@@ -4,6 +4,7 @@ import { MainProvider } from "../../contexts/MainContext";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "../../pages/Home/Home";
 import CreateTask from "../../pages/CreateTask/CreateTask";
+import EditTask from "../../pages/EditTask/EditTask";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
               <Route>
                 <Route path="/" element={<Home />} />
                 <Route path="/create-task" element={<CreateTask />} />
+                <Route path="/edit-task/:taskId" element={<EditTask />} />
               </Route>
             </Routes>
           </BrowserRouter>
