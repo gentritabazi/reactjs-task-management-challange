@@ -1,4 +1,4 @@
-# ReactJs Task Management Challange
+# ReactJs Task Management Challenge
 
 This project is a task management application built with ReactJS as part of a challenge. It allows users to manage their tasks effectively.
 
